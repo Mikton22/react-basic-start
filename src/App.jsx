@@ -1,45 +1,44 @@
-import Header from './components/Header.jsx'
+import Header from './components/Header/Header.jsx'
 import React, { useState } from 'react';
 import {ways, differences} from "./data.js";
-import Motivation from './components/Motivation.jsx'
 import Button from './components/Button/Button.jsx'
+import MotivateSection from "./components/MotivationSection.jsx";
+import DifferencesSection from "./components/DifferencesSection.jsx";
+// import { Fragment } from "react";
+import IntroSection from './components/introSection.jsx'
+import TabsSection from "./components/TabsSection.jsx";
+import FeedbackSection from "./components/FeedbackSection";
 
 export default function App() {
-    const [contentType, setContentType] = useState(null)
 
-    // console.log('app component render')
+    // let tabContent = null
+    // if (contentType) {
+    //     tabContent = <p>{differences[contentType]}</p>
+    // } else {
+    //     tabContent = <p>Click the Button</p>
+    // }
 
-    function handleClick(type) {
-        setContentType(type)
-        // console.log(setContentType)
-    }
-
+    const [tab, setTab] = useState('feedback')
   return (
-    <div>
+    <>
         <Header />
         <main>
-            <section>
-                <h3>Learn React</h3>
-                <ul>
-                    <Motivation {...ways[0]} />
-                    <Motivation {...ways[1]} />
-                    <Motivation {...ways[2]} />
-                </ul>
-            </ section>
-            <section>
-                <Button onClick={()=>handleClick('way')}> Button 1 </Button>
-                <Button onClick={()=>handleClick('easy')}> Button 2 </Button>
-                <Button onClick={()=>handleClick('program')}> Button 3 </Button>
+            <IntroSection />
+            <TabsSection active={tab} onChange={ (current) => setTab(current) } />
 
-                {contentType ? (
-                    <p>{differences[contentType]}</p>
-                ) : ( null
-                    // <p>Click the Button</p>
-                )}
+            {tab==='main' && (
+                <>
+                    <MotivateSection />
+                    <DifferencesSection />
+                </>
+            )}
 
-                { !contentType ? <p>Click the Button</p> : null }
-            </section>
+            {tab==='feedback' && (
+                <>
+                    <FeedbackSection />
+                </>
+            )}
         </main>
-    </div>
+    </>
   )
 }
