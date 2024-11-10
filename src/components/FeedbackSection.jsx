@@ -1,5 +1,23 @@
 import Button from "./Button/Button.jsx";
-import {useState} from "react";
+import {useRef, useState} from "react";
+
+function StateVsRef() {
+    const input = useRef()
+    const [show, setShow] = useState(false)
+
+    function handleKeyDown(event) {
+        if (event.key === 'Enter') {
+            setShow(true)
+            }
+        }
+
+        return (
+        <div>
+            <h3>Опишите причину обращения: {show && input.current.value}</h3>
+            <input ref={input} type="text" className="control" onKeyDown={handleKeyDown} />
+        </div>
+    )
+}
 
 export default function FeedbackSection() {
     const [name, setName] = useState('Иван Иванов')
@@ -11,9 +29,15 @@ export default function FeedbackSection() {
         setHasError(event.target.value.trim().length === 0)
     }
 
+    function toggleError() {
+        setHasError(!hasError)
+    }
+
     return (
         <section>
             <h3>Написать нам: </h3>
+
+            <Button onClick={toggleError}>ToggleError</Button>
 
             <form>
                 <label htmlFor="name" >Ваше имя</label>
@@ -36,8 +60,8 @@ export default function FeedbackSection() {
                     Name: {name} <br/>
                     Reason: {reason}
                 </pre>
-
-                <Button disabled={ hasError }>Отправить</Button>
+                <StateVsRef />
+                <Button disabled={ hasError } isActive={!hasError} >Отправить</Button>
             </form>
         </section>
     )

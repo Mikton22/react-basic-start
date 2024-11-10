@@ -18,7 +18,7 @@ export default function App() {
     //     tabContent = <p>Click the Button</p>
     // }
 
-    const [tab, setTab] = useState('feedback')
+    const [tab, setTab] = useState('main')
   return (
     <>
         <Header />
